@@ -29,7 +29,7 @@ class AudioPre:
         }
         mp = ModelParameters("%s/lib/lib_v5/modelparams/4band_v2.json"%parent_directory)
         model = Nets.CascadedASPPNet(mp.param["bins"] * 2)
-        cpk = torch.load(model_path, map_location="cpu")
+        cpk = torch.load(model_path, map_location="cpu", weights_only=False)
         model.load_state_dict(cpk)
         model.eval()
         if is_half:
@@ -218,7 +218,7 @@ class AudioPreDeEcho:
         mp = ModelParameters("%s/lib/lib_v5/modelparams/4band_v3.json"%parent_directory)
         nout = 64 if "DeReverb" in model_path else 48
         model = CascadedNet(mp.param["bins"] * 2, nout)
-        cpk = torch.load(model_path, map_location="cpu")
+        cpk = torch.load(model_path, map_location="cpu", weights_only=False)
         model.load_state_dict(cpk)
         model.eval()
         if is_half:
